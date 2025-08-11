@@ -22,6 +22,8 @@ def main():
     # 2. Endpoint 연결
     print("\n📊 2단계: Endpoint 연결")
     if not add_endpoint_lines():
+    # print("\n📊 2단계: Endpoint 연결 (버전 2)")
+    # if not add_endpoint_lines2():
         print("❌ Endpoint 연결 실패로 프로그램을 종료합니다.")
         return
     

@@ -330,6 +330,68 @@ class DataChecker:
         
         return len(overlaps) == 0
     
+    def remove_overlapping_lines(self):
+        """겹치는 라인을 삭제합니다."""
+        print("\n🗑️ 겹치는 Lines 삭제 중...")
+        self.logger.info("겹치는 Lines 삭제 시작")
+        
+        original_count = len(self.lines)
+        lines_to_remove = set()
+        
+        # 겹치는 라인 찾기
+        for i, line1 in enumerate(self.lines):
+            if i in lines_to_remove:  # 이미 삭제 대상인 경우 스킵
+                continue
+                
+            for j, line2 in enumerate(self.lines[i+1:], i+1):
+                if j in lines_to_remove:  # 이미 삭제 대상인 경우 스킵
+                    continue
+                    
+                # line1의 연결 정보
+                line1_from = line1.get('fromAddress')
+                line1_to = line1.get('toAddress')
+                
+                # line2의 연결 정보
+                line2_from = line2.get('fromAddress')
+                line2_to = line2.get('toAddress')
+                
+                # 겹침 조건 확인
+                is_identical = (line1_from == line2_from and line1_to == line2_to)
+                is_reverse = (line1_from == line2_to and line1_to == line2_from)
+                
+                if is_identical or is_reverse:
+                    # 나중에 나온 라인(line2)을 삭제 대상으로 추가
+                    lines_to_remove.add(j)
+                    
+                    overlap_type = "동일한 연결" if is_identical else "역방향 연결"
+                    self.logger.info(f"겹침 발견 및 삭제 대상 추가: Line1(ID={line1.get('id')}, Name={line1.get('name')}) vs Line2(ID={line2.get('id')}, Name={line2.get('name')}) - {overlap_type}")
+        
+        # 삭제할 라인 정보 로깅
+        if lines_to_remove:
+            self.logger.info(f"=== 삭제 대상 Lines 정보 ===")
+            for idx in sorted(lines_to_remove):
+                line = self.lines[idx]
+                delete_info = f"삭제 대상: ID={line.get('id')}, Name={line.get('name')}, From={line.get('fromAddress')}, To={line.get('toAddress')}"
+                self.logger.info(delete_info)
+        
+        # 겹치는 라인 삭제 (역순으로 삭제하여 인덱스 변화 방지)
+        for idx in sorted(lines_to_remove, reverse=True):
+            removed_line = self.lines.pop(idx)
+            print(f"   🗑️ 삭제된 Line: ID={removed_line.get('id')}, Name={removed_line.get('name')}")
+            print(f"      From={removed_line.get('fromAddress')}, To={removed_line.get('toAddress')}")
+        
+        removed_count = len(lines_to_remove)
+        remaining_count = len(self.lines)
+        
+        print(f"✅ 겹치는 Lines 삭제 완료:")
+        print(f"   원본 Lines 수: {original_count}개")
+        print(f"   삭제된 Lines 수: {removed_count}개")
+        print(f"   남은 Lines 수: {remaining_count}개")
+        
+        self.logger.info(f"겹치는 Lines 삭제 완료 - 원본: {original_count}개, 삭제: {removed_count}개, 남은: {remaining_count}개")
+        
+        return removed_count > 0
+    
     def find_highly_connected_addresses(self):
         """4개 이상 연결된 address를 찾아서 출력합니다."""
         print("\n🔍 고연결 Addresses 검사 중...")
@@ -447,10 +509,13 @@ class DataChecker:
         # 3. Lines 겹침 검사 및 보고
         overlap_check = self.check_and_report_line_overlaps()
         
-        # 4. 고연결 Addresses 검사
+        # 4. 겹치는 라인 삭제
+        overlap_removed = self.remove_overlapping_lines()
+        
+        # 5. 고연결 Addresses 검사
         highly_connected = self.find_highly_connected_addresses()
         
-        # 5. layout.json 저장
+        # 6. layout.json 저장
         print("\n📊 최종 데이터 저장 중...")
         layout_save_success = self.save_layout_data()
         
@@ -459,6 +524,7 @@ class DataChecker:
         print(f"   Addresses 중복 검사: {'✅ 통과' if address_check else '❌ 오류 발견'}")
         print(f"   Lines 중복 검사: {'✅ 통과' if line_check else '❌ 오류 발견'}")
         print(f"   Lines 겹침 검사: {'✅ 통과' if overlap_check else '❌ 오류 발견'}")
+        print(f"   겹치는 Lines 삭제: {'✅ 삭제됨' if overlap_removed else '✅ 삭제할 항목 없음'}")
         print(f"   고연결 Addresses: {len(highly_connected)}개 발견")
         print(f"   Layout 저장: {'✅ 성공' if layout_save_success else '❌ 실패'}")
         
@@ -467,6 +533,7 @@ class DataChecker:
         self.logger.info(f"Addresses 중복 검사: {'통과' if address_check else '오류 발견'}")
         self.logger.info(f"Lines 중복 검사: {'통과' if line_check else '오류 발견'}")
         self.logger.info(f"Lines 겹침 검사: {'통과' if overlap_check else '오류 발견'}")
+        self.logger.info(f"겹치는 Lines 삭제: {'삭제됨' if overlap_removed else '삭제할 항목 없음'}")
         self.logger.info(f"고연결 Addresses 발견: {len(highly_connected)}개")
         self.logger.info(f"Layout 저장: {'성공' if layout_save_success else '실패'}")
         
