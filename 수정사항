@@ -1,3 +1,4 @@
+#Station 생성
 format.json의 stations키 형식을 참조하여 stations 좌표를 생성하는 make_stations.py 코드 작성한다.
 생성규칙은 다음과 같다. 
 1. output.json에서 addresses, lines의 정보를 PD로 읽는다.
@@ -13,6 +14,10 @@ format.json의 stations키 형식을 참조하여 stations 좌표를 생성하�
 3. 생성된 stations 좌표 정보는 format.json 형식을 참조하여, 기존 ouput.json에 추가 한다. 
 
 
-
+#Layout 생성 체계화, Spring으로....
+스파인: 팹의 중앙 물류 경로, 인터-베이 운송, 양방향 레일.
+로컬 루프: 베이 내 단방향/양방향 레일, 인트라-베이 운송.
+크로스오버: 스파인-로컬 루프, 층 간 연결 단축, 혼잡 완화.
+상호작용: 스파인은 로컬 루프를 연결하고, 크로스오버는 경로 유연성과 층 간 이동을 지원하여 전체 물류 효율성을 높임.
 
 
