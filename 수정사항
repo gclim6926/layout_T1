@@ -1,3 +1,42 @@
+format.log의 형식을 참조하여 output_udp_data.log을 생성하는 generate_udp_data.py을 생성한다. 
+1. 생성 foramt은 format.log 형식을 참조한다.
+    각 필드의 정보는 다음과 같다. 
+    생성일자, 시간, IP정보, Port정보, Description정보, Message, MCP, Vehicle, State, Product, Error Code, Comm State, Current Address, Distance, Next Address, Run Cycle, Run Cycle Interal, Carrier, Destination Address, E/M State,
+    GroupID, Return Origin Port, Return Priority, Job Detail, Move Distance
+
+2. 생성 규칙
+   여기서 고정된 값은 config.py에 저장하고 읽어온다. 
+   a. 생성일자: 시스템상의 일자를 가져온다.
+   b. 시간: 100~300ms 사이에 랜덤한 값으로 증가한다. 
+   c. IP정보: '10.10.10.1'로 공통값을 갖는다.
+   d. Port정보: '3600' 동일 값을 갖는다.
+   e. Description정보: 'DigitalTwin' 값을 갖는다.
+   f. Message정보: '2'을 갖는다.
+   g. MCP: 'OHT' 값을 갖는다. 
+   h. Vehicle: 'V00001' 을 갖는다.   
+   i. State: '1'값을 갖는다.
+   j. Product: '0'을 갖는다.
+   k. Error Code: '0000'을 갖는다.
+   l. Comm State: '1'을 갖는다.
+   m. Current Address: 3번의 규칙을 따른다.
+   n. Distance: '0'의 값을 갖는다.
+   o. Next Address: 3번의 규칙을 따른다.
+   p. Run Cycle: '2'을 갖는다.
+   q. Run Cycle Interval: '1'을 갖는다.
+   r. Carrier: 'AAAA0000'을 갖는다.
+   s. Destination Address: 3번의 규칙을 따른다.
+   t. E/M State: '00000000'을 갖는다. 
+   u. GroupID: '0000'을 갖는다. 
+   v. Return Origin Port: 값 없음
+   w. Return Priority: '0' 값을 갖는다.
+   x. Job Detail: '101' 값을 갖는다.
+   y. Move Distance: '0' 값을 갖는다. 
+
+3. Current Address, Next Address, Destination Address는 output.json의 addresses중 하나의 정보를 갖는다. 
+   Current Address, Destination Address는 config.py에서 입력받는다.
+   Next Address는 Destination Address까지 가기 위한, Current Address에서 lines로 연결된 다음 Address 정보를 갖는다. 
+   
+
 format.json의 stations키 형식을 참조하여 stations 좌표를 생성하는 addStation_IntraBay.py 코드 작성한다.
 생성규칙은 다음과 같다. 
 1. input.json에서 IntraBay의 정보를 pandas로 읽는다.
