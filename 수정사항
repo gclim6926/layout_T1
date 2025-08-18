@@ -32,10 +32,17 @@ format.log의 형식을 참조하여 output_udp_data.log을 생성하는 generat
    x. Job Detail: '101' 값을 갖는다.
    y. Move Distance: '0' 값을 갖는다. 
 
-3. Current Address, Next Address, Destination Address는 output.json의 addresses중 하나의 정보를 갖는다. 
+3. Output.json파일에서 addresses, lines, stations 정보를 읽는다. 
+   Current Address, Next Address, Destination Address는 output.json의 addresses중 하나의 정보를 갖는다. 
    Current Address, Destination Address는 config.py에서 입력받는다.
    Next Address는 Destination Address까지 가기 위한, Current Address에서 lines로 연결된 다음 Address 정보를 갖는다. 
-   
+
+4. Next Address와 Destination Address가 같아질때 까지, 2와 3을 반복한다.
+결과를 output_udp_data.log에 저장한다. 
+
+
+
+
 
 format.json의 stations키 형식을 참조하여 stations 좌표를 생성하는 addStation_IntraBay.py 코드 작성한다.
 생성규칙은 다음과 같다. 
