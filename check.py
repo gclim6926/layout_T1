@@ -18,8 +18,22 @@ class DataChecker:
     
     def setup_logging(self):
         """로깅 설정을 초기화합니다."""
-        # 파일 핸들러 설정
-        file_handler = logging.FileHandler('check.log', encoding='utf-8')
+        # 기존 로그 파일 삭제 후 새로 생성 (덮어쓰기)
+        try:
+            import os
+            if os.path.exists('check.log'):
+                os.remove('check.log')
+                print("🗑️ 기존 check.log 파일을 삭제했습니다.")
+        except Exception as e:
+            print(f"⚠️ 기존 로그 파일 삭제 중 오류: {e}")
+        
+        # 로거 설정 - 기존 핸들러 모두 제거
+        self.logger = logging.getLogger(__name__)
+        self.logger.handlers.clear()  # 기존 핸들러 모두 제거
+        self.logger.setLevel(logging.INFO)
+        
+        # 파일 핸들러 설정 (mode='w'로 덮어쓰기)
+        file_handler = logging.FileHandler('check.log', mode='w', encoding='utf-8')
         file_handler.setLevel(logging.INFO)
         file_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
         
@@ -28,9 +42,7 @@ class DataChecker:
         console_handler.setLevel(logging.INFO)
         console_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
         
-        # 로거 설정
-        self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.INFO)
+        # 핸들러 추가
         self.logger.addHandler(file_handler)
         self.logger.addHandler(console_handler)
         

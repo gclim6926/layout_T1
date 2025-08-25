@@ -7,36 +7,8 @@ OUTPUT_FILE = 'output.json'
 VISUALIZATION_WIDTH = 1920
 VISUALIZATION_HEIGHT = 1080
 
-# Z값 설정 (2D 시각화 전용)
-Z_VALUES = {
-    'z6022': 6022.0,
-    'z4822': 4822.0
-}
-
-# Z값별 색상 설정 (2D 시각화 전용)
-Z_COLORS = {
-    6022.0: '#ff4444',  # 빨간색
-    4822.0: '#4444ff',  # 파란색
-    'other': '#44ff44',  # 녹색
-    'default': '#888888'  # 회색
-}
-
-# 시각화 설정 (2D 시각화 전용)
-VISUALIZATION_CONFIG = {
-    'line_width': 1,
-    'hover_mode': 'closest',
-    'marker_border_color': None,
-    'marker_border_width': 0,
-    'legend_position': {
-        'yanchor': 'top',
-        'y': 0.99,
-        'xanchor': 'left',
-        'x': 0.01
-    }
-}
-
-# 시각화 모드 ('z6022', 'x6022', 'both')
-VISUALIZATION_MODE = 'both'
+# 시각화 모드 ('z6022', 'z4822', 'z0', 'overlap')
+VISUALIZATION_MODE = 'overlap'
 
 # 겹쳐서 보이기 설정 (2D 시각화 전용)
 OVERLAP_VISUALIZATION = False
@@ -45,9 +17,51 @@ OVERLAP_VISUALIZATION = False
 # 노드 크기 설정 (2D 시각화 전용)
 NODE_SIZE = 3
 
+# OHT 애니메이션 프레임 간격(ms) - 2D/3D 공통 사용
+OHT_FRAME_INTERVAL_MS = 100
+# OHT 프레임 건너뛰기 (1=모든 프레임, 2=한 프레임 건너뛰기 등)
+OHT_FRAME_STRIDE = 1
+# OHT 애니메이션 방식: True면 JS restyle 기반(가벼움, 모든 프레임 표현), False면 Plotly frames 기반
+USE_JS_RESTYLE_ANIMATION = True
+# 2D에서 WebGL 사용 여부 (대량 렌더링 최적화)
+USE_WEBGL_2D = True
+# 전체 재생 시간 목표(초) - 동적 stride 계산용 (선택적)
+OHT_TARGET_DURATION_SEC = 10
 
 # 데이터 생성 설정
 RANDOM_INTERVAL = [54.0, 58.0]
 ADDRESS_ID_START = 100001
 LINE_ID_START = 200001
+
+# Stations 생성 설정
+EQUIPMENTS = 1000
+STATION_ID_START = 300003
+STATION_Y_INTERVAL = 20
+
+# UDP 데이터 생성 설정
+UDP_START_ADDRESS = 100059
+UDP_DESTINATION_ADDRESS = 103360
+UDP_IP = '10.10.10.1'
+UDP_PORT = '3600'
+UDP_DESCRIPTION = 'DT'
+UDP_MESSAGE = '2'
+UDP_MCP = 'OHT'
+UDP_VEHICLE = 'V00001'
+UDP_STATE = '1'
+UDP_PRODUCT = '0'
+UDP_ERROR_CODE = '0000'
+UDP_COMM_STATE = '1'
+UDP_DISTANCE = '0'
+UDP_RUN_CYCLE = '2'
+UDP_RUN_CYCLE_INTERVAL = '1'
+UDP_CARRIER = 'AAAA0000'
+UDP_EM_STATE = '00000000'
+UDP_GROUP_ID = '0000'
+UDP_RETURN_PRIORITY = '0'
+UDP_JOB_DETAIL = '101'
+UDP_MOVE_DISTANCE = '0'
+
+# UDP 로그 시간 증가 범위(ms)
+UDP_TIME_INCREMENT_MIN_MS = 300
+UDP_TIME_INCREMENT_MAX_MS = 400
 

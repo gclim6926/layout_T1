@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout Visualizer</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Top Menu -->
+    <div class="top-menu">
+        <a href="#" class="logo">Layout Graph Visualizer</a>
+        <div class="menu-items">
+            <div class="menu-item" data-view="2d">📊 2D Viewer</div>
+            <div class="menu-item" data-view="3d">🎯 3D Viewer</div>
+            <div class="menu-item" data-view="layout_seed">Layout Seed</div>
+            <div class="menu-item" data-view="add_addresses">add Addresses</div>
+            <div class="menu-item" data-view="add_lines_endpoint">add Lines</div>
+            <div class="menu-item" data-view="check">Checker</div>
+            <div class="menu-item" data-view="stations">add Stations</div>
+            <div class="menu-item" data-view="udp_generator">OHT Track Maker</div>
+            <div class="menu-item" data-view="equipments">add Equipments</div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+            <h3>Layer Filter</h3>
+            <div class="filter-group">
+                <label><input type="checkbox" value="z6022" checked > z6022</label>
+                <label><input type="checkbox" value="z4822" checked> z4822</label>
+                <label><input type="checkbox" value="z0"> z0</label>
+                <label><input type="checkbox" value="Overlap" checked> Overlap</label>
+            </div>
+        </div>
+        
+        <div class="sidebar-section">
+            <h3>Component Filter</h3>
+            <div class="filter-group">
+                <label><input type="checkbox" value="addresses" checked> Addresses</label>
+                <label><input type="checkbox" value="lines" checked> Lines</label>
+                <label><input type="checkbox" value="stations" checked> Stations</label>
+                <label><input type="checkbox" value="ohts"> OHTs</label>
+                <label><input type="checkbox" value="equipments"> Equipments</label>
+            </div>
+        </div>
+        
+        <button class="apply-btn" onclick="applyFilters()">Apply Filters</button>
+    </div>
+
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        ☰
+    </button>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <div class="content-area">
+            <div class="welcome-message">
+                <h2>🚀 Layout Graph Visualizer에 오신 것을 환영합니다!</h2>
+                <p>위의 메뉴에서 원하는 기능을 선택하세요.</p>
+            </div>
+            
+            <div id="statusArea"></div>
+            <div id="loadingArea" class="loading">
+                <div class="spinner"></div>
+                <p>처리 중입니다...</p>
+            </div>
+            <div id="resultArea"></div>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/filters.js"></script>
+    <script src="/static/js/viewer2d.js"></script>
+    <script src="/static/js/viewer3d.js"></script>
+    <script src="/static/js/layout_seed.js"></script>
+    <script src="/static/js/actions.js"></script>
+</body>
+</html>

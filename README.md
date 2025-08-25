@@ -30,7 +30,7 @@ Layout Graph Visualizer는 복잡한 레이아웃 데이터를 처리하고 시�
 ## 🚀 주요 기능
 
 ### 1. 데이터 생성 (`generate.py`)
-- **입력 데이터 처리**: `input.json`에서 X_lines, Y_lines, add_points 데이터 추출
+- **입력 데이터 처리**: `input.json`에서 InterBay, IntraBay, add_points 데이터 추출
 - **주소 생성**: 고유 ID를 가진 주소점들 생성
 - **연결선 생성**: 주소점들을 연결하는 라인 생성
 - **다층 지원**: Z6022, Z4822 레이어별 데이터 처리
